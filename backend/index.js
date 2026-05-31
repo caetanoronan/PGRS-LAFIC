@@ -40,5 +40,6 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`\n✅ PGRS LAFIC Backend rodando em http://localhost:${PORT}`);
-  console.log(`📌 API Health: http://localhost:${PORT}/api/health\n`);
+  console.log(`📌 API Health: http://localhost:${PORT}/api/health`);
+  console.log(`🌳 Decision Tree: Inteligência de Classificação ATIVA\n`);
 });
