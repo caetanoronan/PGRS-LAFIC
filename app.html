@@ -702,6 +702,12 @@
       <!-- Biosecurity Tab -->
       <div id="biosecurity" class="tab-content active">
         <div class="biosecurity-content">
+          <div style="text-align: center; padding: 20px 0; margin-bottom: 30px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 12px; border: 2px solid #0ea5e9;">
+            <h3 style="margin-bottom: 15px; color: #0369a1; font-size: 20px;">🌳 Árvore de Decisão para Classificação</h3>
+            <p style="color: #0c4a6e; margin-bottom: 20px;">Clique para visualizar os 5 fluxos de classificação de resíduos e seus caminhos de decisão</p>
+            <button type="button" class="btn-secondary" onclick="showTree()" style="font-size: 16px; padding: 12px 24px;">🌳 Ver Árvore de Decisão</button>
+          </div>
+
           <div class="biosecurity-card">
             <h3>🛡️ Equipamentos e Práticas de Proteção (NB-1)</h3>
             <p style="margin-bottom: 12px; color: #666;">Organismos com baixo risco individual e comunitário, mas que exigem rigor na manipulação e assepsia.</p>
@@ -731,14 +737,6 @@
               <li><strong>Acidentes com Perfurocortantes:</strong> Em caso de cortes com vidrarias ou lamínulas, lave o local abundantemente com água e sabão e informe a coordenação. Cacos de vidro contaminados devem ser recolhidos com pinças/pás e descartados imediatamente na <strong>Caixa Rígida Amarela (Descarpack)</strong>.</li>
               <li><strong>Contato com os olhos:</strong> Utilizar o lava-olhos de emergência por, no mínimo, 15 minutos contínuos.</li>
             </ul>
-          </div>
-
-          <hr style="margin: 30px 0; border: none; border-top: 2px solid #e5e7eb;">
-
-          <div style="text-align: center; padding: 20px 0;">
-            <h3 style="margin-bottom: 15px; color: #333;">🌳 Árvore de Decisão para Classificação</h3>
-            <p style="color: #666; margin-bottom: 20px;">Clique para visualizar os 5 fluxos de classificação de resíduos e seus caminhos de decisão</p>
-            <button type="button" class="btn-secondary" onclick="showTree()" style="font-size: 16px; padding: 12px 24px;">🌳 Ver Árvore de Decisão</button>
           </div>
         </div>
       </div>
@@ -1044,7 +1042,7 @@
         <div class="decision-item" onclick="toggleDecision(this)">
           <h3>🟠 PERFUROCORTANTE <span class="toggle">▼</span></h3>
           <div class="decision-content">
-            <p><strong>Origem:</strong> Lâminas, lamínulas, pipetas de vidro, bisturis quebrados</p>
+            <p><strong>Origem:</strong> Lâminas, lamínulas, pipetas de vidro, vidrarias quebradas, bisturis quebrados</p>
             <p><strong>⚠️ Sem decisão:</strong> DESCARTE IMEDIATO</p>
 
             <div class="action-box action-yes">
