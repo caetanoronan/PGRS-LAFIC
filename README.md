@@ -61,7 +61,7 @@ cp .env.example .env
 
 npm install
 npm run dev
-# Servidor rodando em http://localhost:3000
+# Servidor rodando em http://localhost:3001
 ```
 
 ### 3️⃣ Frontend (React + Vite)
@@ -140,11 +140,11 @@ NOTION_DATABASE_ID_INACTIVATION=...
 NOTION_DATABASE_ID_ALERTS=...
 NOTION_DATABASE_ID_MAINTENANCE=...
 
-PORT=3000
+PORT=3001
 NODE_ENV=development
 FRONTEND_URL=http://localhost:5173
 DATABASE_PATH=./data/alerts.db
-ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
+ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3001
 ```
 
 ## 📦 Deploy
@@ -160,11 +160,11 @@ npm run build
 
 ## 👥 Fases de Desenvolvimento
 
-- ✅ **Fase 1:** Setup Inicial (Notion, Node.js, React)
-- ⏳ **Fase 2:** Backend (Notion API + endpoints)
+- ✅ **Fase 1:** Setup Inicial (Notion, Node.js, Git + GitHub)
+- ✅ **Fase 2:** Backend (Notion API + 4 route sets com endpoints REST)
 - ⏳ **Fase 3:** Frontend Dashboard + Inventário
 - ⏳ **Fase 4:** Biossegurança + Emergências
-- ⏳ **Fase 5:** Testes e Deploy
+- ⏳ **Fase 5:** Testes e Deploy (Render + Vercel)
 
 ## 🤝 Contribuindo
 
