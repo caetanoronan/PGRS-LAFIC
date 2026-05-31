@@ -564,6 +564,108 @@
       padding: 20px;
       border-radius: 8px;
       overflow-x: auto;
+      margin-bottom: 20px;
+    }
+
+    /* Decision Items */
+    .decision-item {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .decision-item:hover {
+      background: #f3f4f6;
+      border-color: #d1d5db;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .decision-item.expanded {
+      border-color: #667eea;
+    }
+
+    .decision-item h3 {
+      padding: 16px;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: #333;
+      background: linear-gradient(90deg, #f9fafb 0%, #ffffff 100%);
+    }
+
+    .decision-item h3:hover {
+      background: linear-gradient(90deg, #f3f4f6 0%, #ffffff 100%);
+    }
+
+    .decision-item.expanded h3 {
+      background: linear-gradient(90deg, #f0f0ff 0%, #ffffff 100%);
+      border-bottom: 2px solid #667eea;
+    }
+
+    .toggle {
+      transition: transform 0.3s;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .decision-item.expanded .toggle {
+      transform: rotate(180deg);
+      color: #667eea;
+    }
+
+    .decision-content {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    }
+
+    .decision-item.expanded .decision-content {
+      max-height: 500px;
+      padding: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .decision-content p {
+      margin: 8px 0;
+      color: #555;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .decision-content strong {
+      color: #333;
+      font-weight: 600;
+    }
+
+    .decision-content .action-box {
+      background: #f9fafb;
+      padding: 12px;
+      border-left: 3px solid #667eea;
+      margin: 12px 0;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .decision-content .action-yes {
+      border-left-color: #22c55e;
+      background: #f0fdf4;
+    }
+
+    .decision-content .action-no {
+      border-left-color: #ef4444;
+      background: #fef2f2;
+    }
+
+    .decision-content .action-dest {
+      border-left-color: #f59e0b;
+      background: #fffbeb;
     }
   </style>
 </head>
@@ -856,15 +958,150 @@
     <p>🧬 Laboratório de Ficologia (LAFIC) - Centro de Ciências Biológicas (CCB) - UFSC</p>
   </footer>
 
-  <!-- Modal: Árvore de Decisão -->
+  <!-- Modal: Árvore de Decisão com Abas -->
   <div id="treeModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
         <h2>🌳 Árvore de Decisão - Fluxo de Resíduos</h2>
         <button class="modal-close" onclick="closeTree()">Fechar ✕</button>
       </div>
-      <div class="mermaid" id="treeContent">
-        <!-- Mermaid diagram será renderizado aqui -->
+
+      <!-- Diagrama Mermaid Principal -->
+      <div class="mermaid" id="treeContent"></div>
+
+      <!-- Abas Expandíveis por Tipo -->
+      <div style="margin-top: 30px;">
+        <h3 style="margin-bottom: 16px; color: #333;">📋 Decisões por Tipo:</h3>
+
+        <!-- 🔴 BIOLÓGICO -->
+        <div class="decision-item" onclick="toggleDecision(this)">
+          <h3>🔴 BIOLÓGICO / INFECTANTE <span class="toggle">▼</span></h3>
+          <div class="decision-content">
+            <p><strong>Origem:</strong> Biomassa, meios de cultura, amostras ambientais</p>
+            <p><strong>❓ Decisão Crítica:</strong> É possível inativar quimicamente na bancada?</p>
+
+            <div class="action-box action-yes">
+              <strong>✅ SIM (Meio líquido)</strong>
+              <p>1. Adicionar Hipoclorito de Sódio 1%</p>
+              <p>2. Aguardar 30 minutos</p>
+              <p>3. Descartar na pia com água corrente abundante</p>
+            </div>
+
+            <div class="action-box action-no">
+              <strong>❌ NÃO (Biomassa sólida)</strong>
+              <p>1. Acondicionar em <strong>Saco Vermelho</strong></p>
+              <p>2. Etiquetar com data, tipo, responsável</p>
+              <p>3. Solicitar <strong>Coleta Especial (SAU-UFSC)</strong></p>
+            </div>
+
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong> Coleta por empresa licenciada ou descarte na pia (se inativado)
+            </div>
+          </div>
+        </div>
+
+        <!-- 🟡 QUÍMICO -->
+        <div class="decision-item" onclick="toggleDecision(this)">
+          <h3>🟡 QUÍMICO <span class="toggle">▼</span></h3>
+          <div class="decision-content">
+            <p><strong>Origem:</strong> Fixadores (formol), solventes, reagentes vencidos</p>
+            <p><strong>❓ Decisão Crítica:</strong> Qual compatibilidade química?</p>
+
+            <div class="action-box action-yes">
+              <strong>🔴 HALOGENADO (Formol, Cloro)</strong>
+              <p>1. Acondicionar em <strong>Bombona PEAD separada</strong> (máx. 80%)</p>
+              <p>2. Rótulo: <strong style="color: red;">VERMELHO</strong></p>
+              <p>3. NUNCA misturar com não-halogenados</p>
+            </div>
+
+            <div class="action-box action-no">
+              <strong>🔵 NÃO-HALOGENADO (Álcool, Acetona)</strong>
+              <p>1. Acondicionar em <strong>Bombona PEAD separada</strong> (máx. 80%)</p>
+              <p>2. Rótulo: <strong style="color: blue;">AZUL</strong></p>
+              <p>3. NUNCA misturar com halogenados</p>
+            </div>
+
+            <div class="action-box" style="border-left-color: #f59e0b; background: #fffbeb;">
+              <strong>🏷️ Próximo Passo:</strong>
+              <p>Preencher <strong>Código IBAMA</strong> (ex: 3001.32.00 para formol)</p>
+              <p>Solicitar <strong>Coleta UFSC</strong></p>
+            </div>
+
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong> Empresa licenciada para processamento químico
+            </div>
+          </div>
+        </div>
+
+        <!-- 🟠 PERFUROCORTANTE -->
+        <div class="decision-item" onclick="toggleDecision(this)">
+          <h3>🟠 PERFUROCORTANTE <span class="toggle">▼</span></h3>
+          <div class="decision-content">
+            <p><strong>Origem:</strong> Lâminas, lamínulas, pipetas de vidro, bisturis quebrados</p>
+            <p><strong>⚠️ Sem decisão:</strong> DESCARTE IMEDIATO</p>
+
+            <div class="action-box action-yes">
+              <strong>🚨 Protocolo de Segurança:</strong>
+              <p>1. Use <strong>PINÇAS</strong> ou <strong>PÁ</strong> - NUNCA as mãos!</p>
+              <p>2. Coloque em <strong>Caixa Rígida Amarela (Descarpack)</strong></p>
+              <p>3. Fechar quando atingir a linha pontilhada</p>
+              <p>4. Solicitar coleta UFSC</p>
+            </div>
+
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong> Empresa licenciada para descarte de perfurocortantes
+            </div>
+          </div>
+        </div>
+
+        <!-- 🔵 LOGÍSTICA REVERSA -->
+        <div class="decision-item" onclick="toggleDecision(this)">
+          <h3>🔵 LOGÍSTICA REVERSA <span class="toggle">▼</span></h3>
+          <div class="decision-content">
+            <p><strong>Origem:</strong> Pilhas, baterias, lâmpadas tubulares</p>
+            <p><strong>⚠️ Sem decisão técnica:</strong> ARMAZENAMENTO ESPECÍFICO</p>
+
+            <div class="action-box action-yes">
+              <strong>📦 Protocolo de Armazenamento:</strong>
+              <p>1. Armazenar em <strong>local seco</strong></p>
+              <p>2. Evitar mistura com outros resíduos</p>
+              <p>3. Identificar tipo: Pilha / Bateria / Lâmpada</p>
+            </div>
+
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong>
+              <p>Entregar em <strong>Ponto de Coleta Específico UFSC</strong></p>
+              <p>(Não vai para lixo comum)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ⚪ COMUM/RECICLÁVEL -->
+        <div class="decision-item" onclick="toggleDecision(this)">
+          <h3>⚪ COMUM / RECICLÁVEL <span class="toggle">▼</span></h3>
+          <div class="decision-content">
+            <p><strong>Origem:</strong> Papel toalha limpo, embalagens limpas, caixas de papelão</p>
+            <p><strong>⚠️ Sem decisão técnica:</strong> DESTINAÇÃO CONFORME TIPO</p>
+
+            <div class="action-box action-yes">
+              <strong>🗑️ Comum (Não reciclável):</strong>
+              <p>1. Usar <strong>Saco Branco</strong></p>
+              <p>2. Colocar em lixeira comum</p>
+              <p>3. Coleta regular de resíduos</p>
+            </div>
+
+            <div class="action-box action-no">
+              <strong>♻️ Reciclável:</strong>
+              <p>1. Usar <strong>Saco Verde ou Azul</strong></p>
+              <p>2. Colocar em lixeira de reciclagem</p>
+              <p>3. Coleta regular de reciclagem</p>
+            </div>
+
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong> Lixo comum ou reciclagem (conforme tipo)
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -876,41 +1113,22 @@
     // Inicializar Mermaid
     mermaid.initialize({ startOnLoad: true, theme: 'default' });
 
-    // Diagrama Mermaid da Árvore de Decisão
+    // Diagrama Mermaid Simplificado (Versão 1)
     const treeFlowchart = `graph TD
-    A["🚀 Início: Atividade no LAFIC"] --> B{"❓ Qual a natureza do resíduo?"}
+    A["🚀 Início: Qual o tipo de resíduo?"]
 
-    B -->|🧬 Biomassa / Meio| C["🔴 BIOLÓGICO / INFECTANTE<br/>Sobras de biomassa, meios de cultura,<br/>amostras ambientais"]
-    B -->|🧪 Fixadores / Solventes| D["🟡 QUÍMICO<br/>Formol, álcool, reagentes vencidos"]
-    B -->|⚔️ Lâminas / Vidro| E["🟠 PERFUROCORTANTE<br/>Lamínulas, pipetas, bisturis"]
-    B -->|♻️ Pilhas / Baterias| F["🔵 LOGÍSTICA REVERSA<br/>Pilhas, baterias, lâmpadas"]
-    B -->|📄 Papel / Embalagem| G["⚪ COMUM / RECICLÁVEL<br/>Papel toalha, embalagens limpas"]
+    A --> B["🔴 BIOLÓGICO<br/>Biomassa, meios, amostras"]
+    A --> C["🟡 QUÍMICO<br/>Fixadores, solventes"]
+    A --> D["🟠 PERFUROCORTANTE<br/>Vidros, lâminas"]
+    A --> E["🔵 LOGÍSTICA REVERSA<br/>Pilhas, baterias"]
+    A --> F["⚪ COMUM/RECICLÁVEL<br/>Papel, embalagens"]
 
-    C --> H{"❓ Inativar<br/>quimicamente?"}
-    H -->|✅ SIM| I["💧 Hipoclorito 1%<br/>por 30 minutos"] --> J["↗️ Descarte na Pia<br/>com água corrente"]
-    H -->|❌ NÃO| K["📦 Saco Vermelho"] --> L["📞 Coleta Especial"]
-
-    D --> M["🔍 Verificar<br/>Incompatibilidade"] --> N["🛢️ Bombona PEAD<br/>ou Vidro Âmbar"]
-    N --> O["🏷️ Código IBAMA"] --> P["📞 Coleta UFSC"]
-
-    E --> Q["🚨 Caixa Rígida<br/>Amarela"] --> P
-
-    F --> R["🏠 Local Seco"] --> S["📍 Ponto de Coleta UFSC"]
-
-    G --> T["🗑️ Lixeira Comum<br/>ou Reciclável"]
-
-    style A fill:#667eea,stroke:#333,stroke-width:3px,color:#fff
-    style B fill:#764ba2,stroke:#333,stroke-width:2px,color:#fff
-    style C fill:#fee2e2,stroke:#ef4444,stroke-width:2px
-    style D fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
-    style E fill:#fed7aa,stroke:#ea580c,stroke-width:2px
-    style F fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
-    style G fill:#e5e7eb,stroke:#6b7280,stroke-width:2px
-    style J fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#166534
-    style L fill:#fce7f3,stroke:#ec4899,stroke-width:2px
-    style P fill:#fce7f3,stroke:#ec4899,stroke-width:2px
-    style S fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#166534
-    style T fill:#f3f4f6,stroke:#9ca3af,stroke-width:2px`;
+    style A fill:#667eea,color:#fff,stroke:#333,stroke-width:3px
+    style B fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+    style C fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style D fill:#fed7aa,stroke:#ea580c,stroke-width:2px
+    style E fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style F fill:#e5e7eb,stroke:#6b7280,stroke-width:2px`;
 
     // Abrir modal com árvore - renderizar APÓS estar visível
     function showTree() {
@@ -927,6 +1145,11 @@
 
     function closeTree() {
       document.getElementById('treeModal').classList.remove('active');
+    }
+
+    // Expandir/Colapsar decisões
+    function toggleDecision(element) {
+      element.classList.toggle('expanded');
     }
 
     // Fechar modal ao clicar fora
