@@ -2,6 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import 'express-async-errors';
 import dotenv from 'dotenv';
+import wasteRoutes from './routes/waste.js';
+import biosecurityRoutes from './routes/biosecurity.js';
+import alertRoutes from './routes/alerts.js';
+import maintenanceRoutes from './routes/maintenance.js';
 
 dotenv.config();
 
@@ -19,12 +23,11 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Routes (to be implemented)
-// app.use('/api/waste', wasteRoutes);
-// app.use('/api/analytics', analyticsRoutes);
-// app.use('/api/biosecurity', biosecurityRoutes);
-// app.use('/api/emergencies', emergencyRoutes);
-// app.use('/api/alerts', alertRoutes);
+// Routes
+app.use('/api/waste', wasteRoutes);
+app.use('/api/biosecurity', biosecurityRoutes);
+app.use('/api/alerts', alertRoutes);
+app.use('/api/maintenance', maintenanceRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
