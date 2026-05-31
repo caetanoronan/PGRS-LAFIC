@@ -2,11 +2,5 @@
   "buildCommand": "",
   "outputDirectory": ".",
   "framework": null,
-  "public": true,
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/app_dashboard.html"
-    }
-  ]
+  "public": true
 }
