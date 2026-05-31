@@ -578,7 +578,20 @@
       event.preventDefault();
 
       const formData = new FormData(event.target);
-      const data = Object.fromEntries(formData);
+      const formObj = Object.fromEntries(formData);
+
+      const data = {
+        nome: formObj.tipoResiduos || `Resíduo ${formObj.tipoResiduos}`,
+        tipo: formObj.tipoResiduos,
+        risco: formObj.risco,
+        ambiente: formObj.ambiente,
+        volume: parseFloat(formObj.volume) || 0,
+        unidade: 'kg',
+        acondicionamento: formObj.acondicionamento,
+        epcNecessario: formObj.epc,
+        observacoes: formObj.observacoes,
+        epiObrigatorio: []
+      };
 
       try {
         const response = await fetch(`${API_BASE}/waste`, {
@@ -592,7 +605,8 @@
           event.target.reset();
           loadInventory();
         } else {
-          showAlert('❌ Erro ao registrar resíduo', 'error');
+          const error = await response.json();
+          showAlert(`❌ Erro: ${error.error}`, 'error');
         }
       } catch (error) {
         showAlert('❌ Erro de conexão com API', 'error');
@@ -607,19 +621,19 @@
         const wastes = await response.json();
 
         const table = document.querySelector('#inventoryTable tbody');
-        if (wastes.length === 0) {
+        if (!Array.isArray(wastes) || wastes.length === 0) {
           table.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">Nenhum resíduo registrado</td></tr>';
           return;
         }
 
         table.innerHTML = wastes.map(w => `
           <tr>
-            <td>${new Date(w.data).toLocaleDateString('pt-BR')}</td>
-            <td>${w.tipo}</td>
-            <td>${w.ambiente}</td>
+            <td>${w.dataRegistro ? new Date(w.dataRegistro).toLocaleDateString('pt-BR') : '-'}</td>
+            <td>${w.tipo || '-'}</td>
+            <td>${w.ambiente || '-'}</td>
             <td>${w.volume} ${w.unidade}</td>
             <td><span class="badge ${w.status === 'Coletado' ? 'green' : 'yellow'}">${w.status}</span></td>
-            <td>${w.epi ? '✓' : '-'}</td>
+            <td>${w.epiObrigatorio && w.epiObrigatorio.length > 0 ? '✓' : '-'}</td>
           </tr>
         `).join('');
       } catch (error) {
