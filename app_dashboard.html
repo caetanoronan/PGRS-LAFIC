@@ -1285,7 +1285,7 @@
     async function checkApiStatus() {
       const statusDiv = document.getElementById('apiStatus');
       try {
-        const response = await fetch(`${API_BASE}/health`, { signal: AbortSignal.timeout(3000) });
+        const response = await fetch(`${API_BASE}/health`, { signal: AbortSignal.timeout(60000) });
         const data = await response.json();
 
         statusDiv.classList.remove('error');
@@ -1297,6 +1297,7 @@
           </div>
         `;
       } catch (error) {
+        console.error('Erro ao verificar API:', error);
         statusDiv.classList.add('error');
         statusDiv.innerHTML = `
           <div class="status-indicator error"></div>
