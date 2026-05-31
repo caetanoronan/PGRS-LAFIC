@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PGRS LAFIC - Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -499,6 +500,71 @@
     .biosecurity-card strong {
       color: #333;
     }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal.active {
+      display: block;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 1200px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 15px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      color: #333;
+    }
+
+    .modal-close {
+      background: #e5e7eb;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .modal-close:hover {
+      background: #d1d5db;
+    }
+
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      background: #f9fafb;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
   </style>
 </head>
 <body>
@@ -686,6 +752,7 @@
           <div style="display: flex; gap: 10px;">
             <button type="submit" id="submitBtn">✅ Registrar Resíduo</button>
             <button type="reset" class="btn-secondary" onclick="resetForm()">🔄 Limpar Tudo</button>
+            <button type="button" class="btn-secondary" onclick="showTree()">🌳 Ver Árvore</button>
           </div>
         </form>
       </div>
@@ -788,9 +855,88 @@
     <p>🧬 Laboratório de Ficologia (LAFIC) - Centro de Ciências Biológicas (CCB) - UFSC</p>
   </footer>
 
+  <!-- Modal: Árvore de Decisão -->
+  <div id="treeModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🌳 Árvore de Decisão - Fluxo de Resíduos</h2>
+        <button class="modal-close" onclick="closeTree()">Fechar ✕</button>
+      </div>
+      <div class="mermaid" id="treeContent">
+        <!-- Mermaid diagram será renderizado aqui -->
+      </div>
+    </div>
+  </div>
+
   <script>
     const API_BASE = 'http://localhost:3001/api';
     let allWastes = [];
+
+    // Inicializar Mermaid
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+
+    // Diagrama Mermaid da Árvore de Decisão
+    const treeFlowchart = `graph TD
+    A["🚀 Início: Atividade no LAFIC"] --> B{"❓ Qual a natureza do resíduo?"}
+
+    B -->|🧬 Biomassa / Meio| C["🔴 BIOLÓGICO / INFECTANTE<br/>Sobras de biomassa, meios de cultura,<br/>amostras ambientais"]
+    B -->|🧪 Fixadores / Solventes| D["🟡 QUÍMICO<br/>Formol, álcool, reagentes vencidos"]
+    B -->|⚔️ Lâminas / Vidro| E["🟠 PERFUROCORTANTE<br/>Lamínulas, pipetas, bisturis"]
+    B -->|♻️ Pilhas / Baterias| F["🔵 LOGÍSTICA REVERSA<br/>Pilhas, baterias, lâmpadas"]
+    B -->|📄 Papel / Embalagem| G["⚪ COMUM / RECICLÁVEL<br/>Papel toalha, embalagens limpas"]
+
+    C --> H{"❓ Inativar<br/>quimicamente?"}
+    H -->|✅ SIM| I["💧 Hipoclorito 1%<br/>por 30 minutos"] --> J["↗️ Descarte na Pia<br/>com água corrente"]
+    H -->|❌ NÃO| K["📦 Saco Vermelho"] --> L["📞 Coleta Especial"]
+
+    D --> M["🔍 Verificar<br/>Incompatibilidade"] --> N["🛢️ Bombona PEAD<br/>ou Vidro Âmbar"]
+    N --> O["🏷️ Código IBAMA"] --> P["📞 Coleta UFSC"]
+
+    E --> Q["🚨 Caixa Rígida<br/>Amarela"] --> P
+
+    F --> R["🏠 Local Seco"] --> S["📍 Ponto de Coleta UFSC"]
+
+    G --> T["🗑️ Lixeira Comum<br/>ou Reciclável"]
+
+    style A fill:#667eea,stroke:#333,stroke-width:3px,color:#fff
+    style B fill:#764ba2,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+    style D fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style E fill:#fed7aa,stroke:#ea580c,stroke-width:2px
+    style F fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style G fill:#e5e7eb,stroke:#6b7280,stroke-width:2px
+    style J fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#166534
+    style L fill:#fce7f3,stroke:#ec4899,stroke-width:2px
+    style P fill:#fce7f3,stroke:#ec4899,stroke-width:2px
+    style S fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#166534
+    style T fill:#f3f4f6,stroke:#9ca3af,stroke-width:2px`;
+
+    // Abrir modal com árvore
+    function showTree() {
+      const modal = document.getElementById('treeModal');
+      const content = document.getElementById('treeContent');
+
+      // Limpar conteúdo anterior
+      content.innerHTML = treeFlowchart;
+
+      // Renderizar Mermaid
+      mermaid.contentLoaded();
+
+      // Mostrar modal
+      modal.classList.add('active');
+    }
+
+    function closeTree() {
+      document.getElementById('treeModal').classList.remove('active');
+    }
+
+    // Fechar modal ao clicar fora
+    window.onclick = function(event) {
+      const modal = document.getElementById('treeModal');
+      if (event.target == modal) {
+        modal.classList.remove('active');
+      }
+    }
 
     // FLUXOGRAMA: Definição de tipos por origem e suas classificações
     const fluxograma = {
