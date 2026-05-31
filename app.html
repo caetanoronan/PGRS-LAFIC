@@ -348,14 +348,14 @@
       <h2>Dashboard</h2>
 
       <div class="tabs">
-        <button class="tab active" onclick="switchTab('dashboard')">📊 Dashboard</button>
-        <button class="tab" onclick="switchTab('inventory')">📦 Inventário</button>
-        <button class="tab" onclick="switchTab('biosecurity')">🧬 Biossegurança</button>
+        <button class="tab active" onclick="switchTab('biosecurity')">🧬 Biossegurança</button>
         <button class="tab" onclick="switchTab('add-waste')">➕ Registrar Resíduo</button>
+        <button class="tab" onclick="switchTab('inventory')">📦 Inventário</button>
+        <button class="tab" onclick="switchTab('dashboard')">📊 Dashboard</button>
       </div>
 
       <!-- Dashboard Tab -->
-      <div id="dashboard" class="tab-content active">
+      <div id="dashboard" class="tab-content">
         <div class="grid">
           <div class="card">
             <h3>Resíduos Químicos</h3>
@@ -402,7 +402,7 @@
       </div>
 
       <!-- Biosecurity Tab -->
-      <div id="biosecurity" class="tab-content">
+      <div id="biosecurity" class="tab-content active">
         <div style="margin-bottom: 20px;">
           <h3 style="font-size: 20px; color: #333;">🧬 Diretrizes de Biossegurança LAFIC</h3>
           <p style="color: #666; font-size: 14px;">Protocolos obrigatórios para manipulação, cultivo, uso de EPIs/EPCs e resposta a emergências.</p>
