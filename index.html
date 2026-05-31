@@ -1,0 +1,1029 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PGRS LAFIC - UFSC</title>
+  <style>
+    :root {
+      --bg: #f6f7f4;
+      --panel: #ffffff;
+      --ink: #1e2723;
+      --muted: #617069;
+      --line: #d9ded8;
+      --green: #2f8f5b;
+      --green-dark: #1f6542;
+      --blue: #256ea8;
+      --red: #ba3d36;
+      --yellow: #d5a51f;
+      --brown: #8a5a35;
+      --gray: #eef1ed;
+      --shadow: 0 16px 38px rgba(26, 42, 35, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--blue);
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      padding: 34px 0 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--green-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 900px;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 790px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .action-btn {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: var(--ink);
+      background: var(--panel);
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      border-color: var(--green);
+      color: var(--green-dark);
+    }
+
+    .tabs-shell {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(246, 247, 244, 0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 0;
+      scrollbar-width: thin;
+    }
+
+    .tab {
+      min-width: max-content;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 9px 12px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .tab[aria-selected="true"] {
+      color: #ffffff;
+      background: var(--green-dark);
+      border-color: var(--green-dark);
+    }
+
+    main {
+      padding: 28px 0 56px;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: reveal 160ms ease-out;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-head {
+      display: flex;
+      gap: 20px;
+      align-items: start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 2.5vw, 2.3rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 28px 0 10px;
+      font-size: 1.12rem;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    ul,
+    ol {
+      margin-top: 8px;
+      padding-left: 22px;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    .lede {
+      max-width: 800px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .mini-title {
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+
+    .field-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+    }
+
+    .field {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+    }
+
+    .field:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .label {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .todo {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 11px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--green-dark);
+      background: var(--gray);
+      font-size: 0.92rem;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .risk-row {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      margin-top: 5px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .dot.red { background: var(--red); }
+    .dot.brown { background: var(--brown); }
+    .dot.yellow { background: var(--yellow); }
+    .dot.blue { background: var(--blue); }
+
+    .map-block {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .map-block img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #ffffff;
+    }
+
+    .caption {
+      margin: 0;
+      padding: 10px 12px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 0.92rem;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      counter-reset: step;
+    }
+
+    .flow-step {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 36px 12px 12px;
+      min-height: 118px;
+      background: var(--panel);
+    }
+
+    .flow-step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      color: #ffffff;
+      background: var(--green-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pill-list li {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      background: #ffffff;
+    }
+
+    .reference-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .reference-list p {
+      margin: 0;
+      border-left: 4px solid var(--green);
+      padding: 8px 0 8px 12px;
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    @média (max-width: 860px) {
+      .hero,
+      .section-head,
+      .grid.two,
+      .grid.three {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        justify-content: flex-start;
+      }
+
+      .field {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+
+      .flow {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @média (max-width: 560px) {
+      .wrap {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .hero {
+        padding-top: 24px;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @média print {
+      body {
+        background: #ffffff;
+      }
+
+      .tabs-shell,
+      .actions {
+        display: none;
+      }
+
+      .tab-panel {
+        display: block;
+        page-break-before: always;
+      }
+
+      .tab-panel:first-child {
+        page-break-before: auto;
+      }
+
+      .card,
+      .table-wrap,
+      .map-block,
+      .flow-step {
+        box-shadow: none;
+      }
+
+      a {
+        color: #000000;
+        text-decoration: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap hero">
+      <div>
+        <p class="eyebrow">Universidade Federal de Santa Catarina</p>
+        <h1>Plano de Gerenciamento de Resíduos Sólidos do LAFIC</h1>
+        <p class="subtitle">Laboratório de Ficologia. Versão preliminar organizada em abas para revisão, preenchimento de dados pendentes e apresentação institucional.</p>
+      </div>
+      <div class="actions" aria-label="Ações do documento">
+        <button class="action-btn" type="button" onclick="window.print()">Imprimir / salvar PDF</button>
+        <a class="action-btn" href="PGRS_LAFIC.md">Abrir Markdown</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs-shell" aria-label="Seções do PGRS">
+    <div class="wrap tabs" role="tablist">
+      <button class="tab" id="tab-identificação" role="tab" type="button" aria-controls="identificação" aria-selected="true">Identificação</button>
+      <button class="tab" id="tab-diagnóstico" role="tab" type="button" aria-controls="diagnóstico" aria-selected="false">Diagnóstico</button>
+      <button class="tab" id="tab-resíduos" role="tab" type="button" aria-controls="resíduos" aria-selected="false">Resíduos</button>
+      <button class="tab" id="tab-procedimentos" role="tab" type="button" aria-controls="procedimentos" aria-selected="false">Procedimentos</button>
+      <button class="tab" id="tab-implementação" role="tab" type="button" aria-controls="implementação" aria-selected="false">Implementação</button>
+      <button class="tab" id="tab-segurança" role="tab" type="button" aria-controls="segurança" aria-selected="false">Segurança</button>
+      <button class="tab" id="tab-registros" role="tab" type="button" aria-controls="registros" aria-selected="false">Registros</button>
+      <button class="tab" id="tab-referências" role="tab" type="button" aria-controls="referências" aria-selected="false">Referências</button>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="tab-panel active" id="identificação" role="tabpanel" aria-labelledby="tab-identificação">
+      <div class="section-head">
+        <div>
+          <h2>Identificação e Apresentação</h2>
+          <p class="lede">Dados institucionais do laboratório e finalidade do plano.</p>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <article class="card">
+          <h3 class="mini-title">Identificação</h3>
+          <dl class="field-list">
+            <div class="field"><dt class="label">Unidade</dt><dd>Universidade Federal de Santa Catarina - UFSC</dd></div>
+            <div class="field"><dt class="label">Laboratório</dt><dd>Laboratório de Ficologia - LAFIC</dd></div>
+            <div class="field"><dt class="label">Setor/Departamento</dt><dd>Departamento de Botânica</dd></div>
+            <div class="field"><dt class="label">Centro</dt><dd>Centro de Ciências Biológicas (CCB)</dd></div>
+            <div class="field"><dt class="label">Endereço</dt><dd>Rua Eng. Agronômico Andrei Cristian Ferreira, 216 - Carvoeira</dd></div>
+            <div class="field"><dt class="label">Responsável pelo laboratório</dt><dd>Carlos Yure B. Oliveira, José Bonomi Barufi, Leonardo R. Rörig e Paulo Antunes Horta</dd></div>
+            <div class="field"><dt class="label">Responsável pelo PGRS</dt><dd><span class="todo">[preencher]</span></dd></div>
+            <div class="field"><dt class="label">Data de elaboração</dt><dd><span class="todo">[preencher]</span></dd></div>
+            <div class="field"><dt class="label">Data de revisão</dt><dd><span class="todo">[preencher]</span></dd></div>
+          </dl>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Apresentação</h3>
+          <p>Este Plano de Gerenciamento de Resíduos Sólidos estabelece as diretrizes para a gestão dos resíduos gerados no LAFIC, considerando atividades de ensino, pesquisa, extensão, cultivo, manipulação de materiais biológicos, armazenamento de insumos e rotinas laboratoriais.</p>
+          <p>O laboratório realiza manejo, cultivo e taxonomia de macroalgas e microalgas, com enfoque em amostras de ecossistemas costeiros como manguezais. Os materiais biológicos gerados requerem classificação (provavelmente subgrupo A1 ou A4, dependendo da manipulação).</p>
+          <p>O documento utiliza como base o Manual de Gerenciamento de Resíduos Laboratoriais da UFSC, as rotinas institucionais de gerenciamento de resíduos e o Mapa de Risco do Laboratório de Ficologia.</p>
+        </article>
+      </div>
+
+      <h3>Objetivos</h3>
+      <div class="grid two">
+        <article class="card">
+          <h3 class="mini-title">Objetivo geral</h3>
+          <p>Estabelecer procedimentos para segregação, acondicionamento, identificação, armazenamento temporário, coleta interna, coleta externa e destinação ambientalmente adequada dos resíduos gerados no LAFIC, reduzindo riscos à saúde, à segurança ocupacional e ao meio ambiente.</p>
+        </article>
+        <article class="card">
+          <h3 class="mini-title">Objetivos específicos</h3>
+          <ul>
+            <li>Padronizar a separação dos resíduos na fonte geradora.</li>
+            <li>Reduzir mistura indevida entre resíduos perigosos e não perigosos.</li>
+            <li>Orientar servidores, docentes, discentes, bolsistas, terceirizados e usuários.</li>
+            <li>Associar o gerenciamento dos resíduos aos riscos identificados no mapa.</li>
+            <li>Manter registros de geração, coleta, tratamento e destinação.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="diagnóstico" role="tabpanel" aria-labelledby="tab-diagnóstico">
+      <div class="section-head">
+        <div>
+          <h2>Caracterização e Diagnóstico</h2>
+          <p class="lede">Ambientes do LAFIC, mapa de risco e relação entre os riscos e o gerenciamento de resíduos.</p>
+        </div>
+      </div>
+
+      <h3>Ambientes do laboratório</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Código</th><th>Ambiente</th><th>Uso no PGRS</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>E1</td><td>Sala de reuniões/estudos</td><td>Resíduos comuns, recicláveis e organização de registros.</td></tr>
+            <tr><td>E2</td><td>Sala dos professores</td><td>Resíduos administrativos e possíveis itens de logística reversa.</td></tr>
+            <tr><td>E3</td><td>Câmara de cultivo 1</td><td>Resíduos biológicos e materiais associados a cultivo.</td></tr>
+            <tr><td>E4</td><td>Laboratório 1</td><td>Ponto crítico para segregação de resíduos químicos, biológicos e perfurocortantes.</td></tr>
+            <tr><td>E5</td><td>Sala de estoque</td><td>Controle de reagentes, validade, frascos e materiais armazenados.</td></tr>
+            <tr><td>E6</td><td>Laboratório 2</td><td>Ponto crítico para segregação e identificação de resíduos perigosos.</td></tr>
+            <tr><td>E7</td><td>Sala pré-experimental</td><td>Atividades preparatórias e geração em pequena escala.</td></tr>
+            <tr><td>E8</td><td>Câmara de cultivo 2</td><td>Resíduos biológicos e recipientes de cultivo.</td></tr>
+            <tr><td>E9</td><td>Sala de mergulho</td><td>EPIs, embalagens, manutenção e possíveis resíduos especiais.</td></tr>
+            <tr><td>E10</td><td>Câmara de cultivo 3</td><td>Resíduos biológicos e recipientes de cultivo.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="map-block">
+        <img src="Mapa_de_risco/Mapa_de_risco.jpeg" alt="Mapa de risco do Laboratório de Ficologia da UFSC">
+        <p class="caption">Mapa de risco do Laboratório de Ficologia utilizado como base para caracterização dos ambientes e riscos associados.</p>
+      </div>
+
+      <h3>Riscos associados ao PGRS</h3>
+      <div class="grid three">
+        <article class="card"><div class="risk-row"><span class="dot"></span><div><strong>Risco físico</strong><p>Associado a equipamentos, temperatura, umidade, iluminação, ruído ou condições físicas dos ambientes.</p></div></div></article>
+        <article class="card"><div class="risk-row"><span class="dot red"></span><div><strong>Risco químico</strong><p>Relaciona-se ao uso, armazenamento, manipulação e descarte de reagentes, soluções e misturas químicas.</p></div></div></article>
+        <article class="card"><div class="risk-row"><span class="dot brown"></span><div><strong>Risco biológico</strong><p>Associado a cultivo, organismos, amostras biológicas, meios de cultura e materiais contaminados.</p></div></div></article>
+        <article class="card"><div class="risk-row"><span class="dot yellow"></span><div><strong>Risco ergonômico</strong><p>Relacionado a posturas, mobiliário, repetitividade e permanência em bancadas ou microscopia.</p></div></div></article>
+        <article class="card"><div class="risk-row"><span class="dot blue"></span><div><strong>Risco de acidente</strong><p>Envolve vidrarias, perfurocortantes, quedas, choque elétrico, queimaduras e derramamentos.</p></div></div></article>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="resíduos" role="tabpanel" aria-labelledby="tab-resíduos">
+      <div class="section-head">
+        <div>
+          <h2>Classificação dos Resíduos</h2>
+          <p class="lede">Classificação preliminar a ser validada com a rotina real do LAFIC.</p>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <article class="card">
+          <h3 class="mini-title">Resíduos químicos</h3>
+          <p>Exemplos: soluções vencidas ou sem uso, reagentes vencidos, misturas líquidas de ensaios, frascos contaminados e materiais absorventes contaminados por produtos químicos.</p>
+          <ul>
+            <li>Segregar por compatibilidade química.</li>
+            <li>Usar recipientes compatíveis, íntegros e vedados.</li>
+            <li>Identificar composição, risco, data, laboratório e responsável.</li>
+            <li>Não descartar na pia sem autorização técnica.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Resíduos biológicos</h3>
+          <p>Exemplos: meios de cultura contaminados, amostras biológicas, materiais contendo organismos cultivados, ponteiras, tubos, placas, filtros, luvas ou papéis contaminados.</p>
+          <ul>
+            <li>Segregar no ponto de geração.</li>
+            <li>Acondicionar em recipiente adequado ao risco.</li>
+            <li>Realizar tratamento prévio quando exigido.</li>
+            <li>Não misturar com resíduos comuns ou recicláveis.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Perfurocortantes e vidrarias</h3>
+          <p>Exemplos: lâminas, lamínulas, agulhas, ponteiras rígidas, pipetas Pasteur, vidrarias quebradas e materiais capazes de cortar ou perfurar.</p>
+          <ul>
+            <li>Acondicionar em recipiente rígido e resistente.</li>
+            <li>Respeitar limite de enchimento.</li>
+            <li>Diferenciar vidraria limpa de vidraria contaminada.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Recicláveis e rejeitos comuns</h3>
+          <p>Recicláveis incluem papel, papelão, embalagens plásticas e metálicas limpas. Rejeitos comuns incluem papel toalha sem contaminação perigosa, resíduos sanitários e materiais de varrição.</p>
+          <ul>
+            <li>Encaminhar recicláveis apenas quando limpos e secos.</li>
+            <li>Não misturar contaminados com coleta seletiva.</li>
+            <li>Acondicionar rejeitos comuns em coletor próprio.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Logística reversa</h3>
+          <p>Exemplos: pilhas, baterias, lâmpadas, equipamentos eletroeletrônicos, periféricos, cartuchos, toners e componentes específicos.</p>
+          <ul>
+            <li>Segregar por tipo.</li>
+            <li>Manter em local seco, protegido e identificado.</li>
+            <li>Encaminhar conforme fluxo institucional da UFSC.</li>
+          </ul>
+        </article>
+      </div>
+
+      <h3>Pontos de geração por ambiente</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Ambiente</th><th>Possíveis resíduos gerados</th><th>Observações para validação</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>E1 - Sala de reuniões/estudos</td><td>Papel, embalagens limpas, rejeitos comuns.</td><td>Confirmar se há consumo de alimentos ou impressão.</td></tr>
+            <tr><td>E2 - Sala dos professores</td><td>Papel, embalagens limpas, rejeitos comuns, toners/cartuchos.</td><td>Confirmar equipamentos e materiais de escritório.</td></tr>
+            <tr><td>E3 - Câmara de cultivo 1</td><td>Materiais biológicos, meios de cultura, luvas, papéis contaminados, frascos.</td><td>Confirmar organismos cultivados e tratamento prévio.</td></tr>
+            <tr><td>E4 - Laboratório 1</td><td>Resíduos químicos, biológicos, vidrarias, perfurocortantes, recicláveis limpos, rejeitos.</td><td>Priorizar segregação em bancada.</td></tr>
+            <tr><td>E5 - Sala de estoque</td><td>Reagentes vencidos, embalagens, frascos, materiais sujeitos a logística reversa.</td><td>Manter inventário atualizado de reagentes e validade.</td></tr>
+            <tr><td>E6 - Laboratório 2</td><td>Resíduos químicos, biológicos, vidrarias, perfurocortantes, recicláveis limpos, rejeitos.</td><td>Requer identificação clara e controle de incompatibilidades.</td></tr>
+            <tr><td>E7 - Sala pré-experimental</td><td>Materiais biológicos, químicos em pequena escala, luvas, ponteiras, frascos.</td><td>Confirmar atividades realizadas.</td></tr>
+            <tr><td>E8 - Câmara de cultivo 2</td><td>Materiais biológicos, meios de cultura, recipientes contaminados.</td><td>Confirmar volume e frequência.</td></tr>
+            <tr><td>E9 - Sala de mergulho</td><td>Materiais de manutenção, EPIs, embalagens, possíveis resíduos especiais.</td><td>Confirmar limpeza de equipamentos, baterias ou itens pressurizados.</td></tr>
+            <tr><td>E10 - Câmara de cultivo 3</td><td>Materiais biológicos, meios de cultura, recipientes contaminados.</td><td>Confirmar volume e frequência.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="procedimentos" role="tabpanel" aria-labelledby="tab-procedimentos">
+      <div class="section-head">
+        <div>
+          <h2>Procedimentos Operacionais</h2>
+          <p class="lede">Rotina mínima para segregação, acondicionamento, armazenamento temporário e encaminhamento.</p>
+        </div>
+      </div>
+
+      <h3>Princípios de gerenciamento</h3>
+      <ol>
+        <li>Não geração.</li>
+        <li>Redução.</li>
+        <li>Reutilização, quando segura e permitida.</li>
+        <li>Reciclagem.</li>
+        <li>Tratamento.</li>
+        <li>Destinação final ambientalmente adequada.</li>
+      </ol>
+
+      <h3>Fluxo preliminar</h3>
+      <div class="flow">
+        <div class="flow-step">Geração e segregação no ponto de origem.</div>
+        <div class="flow-step">Identificação e acondicionamento.</div>
+        <div class="flow-step">Registro interno.</div>
+        <div class="flow-step">Armazenamento temporário no LAFIC.</div>
+        <div class="flow-step">Solicitação ou entrega conforme fluxo da UFSC.</div>
+        <div class="flow-step">Coleta, tratamento ou destinação por setor competente.</div>
+      </div>
+
+      <div class="grid two">
+        <article class="card">
+          <h3 class="mini-title">Segregação e identificação</h3>
+          <ul>
+            <li>Segregar no momento da geração.</li>
+            <li>Manter recipientes próximos aos pontos de geração.</li>
+            <li>Usar recipiente compatível com o resíduo.</li>
+            <li>Identificar tipo de resíduo, laboratório, responsável, data e risco.</li>
+            <li>Evitar mistura entre resíduos incompatíveis.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Armazenamento temporário</h3>
+          <ul>
+            <li>Definir local sinalizado e protegido de acesso indevido.</li>
+            <li>Separar resíduos químicos por compatibilidade.</li>
+            <li>Manter frascos fechados e bandejas de contenção quando aplicável.</li>
+            <li>Evitar acúmulo desnecessário.</li>
+            <li>Registrar data, tipo de resíduo e responsável.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="implementação" role="tabpanel" aria-labelledby="tab-implementação">
+      <div class="section-head">
+        <div>
+          <h2>Implementação de Estratégias</h2>
+          <p class="lede">Soluções baseadas no Manual de Gerenciamento de Resíduos Laboratoriais da UFSC para contornar desafios operacionais do LAFIC.</p>
+        </div>
+      </div>
+
+      <h3>1. Ausência de Autoclave para Tratamento Prévio</h3>
+      <div class="grid">
+        <article class="card">
+          <h3 class="mini-title">Problema</h3>
+          <p>Geração contínua de resíduos biológicos (meios de cultura contaminados, amostras de macroalgas e microalgas) sem possibilidade de inativação no próprio laboratório.</p>
+        </article>
+        <article class="card">
+          <h3 class="mini-title">Solução: Acondicionamento Especial</h3>
+          <ul>
+            <li>Resíduos biológicos sem pré-tratamento devem ser acondicionados em <strong>sacos vermelhos</strong> com a simbologia padrão de substância infectante.</li>
+            <li>Esses sacos não podem seguir o fluxo comum de resíduos biológicos (sacos brancos são para materiais já inativados).</li>
+            <li>Solicitar <strong>coleta especial</strong> à Gestão de Resíduos da UFSC.</li>
+            <li>O material será encaminhado para tratamento posterior externo (autoclavagem ou outro método).</li>
+          </ul>
+        </article>
+      </div>
+
+      <h3>2. Falta de Estimativas de Volume Mensal</h3>
+      <div class="grid">
+        <article class="card">
+          <h3 class="mini-title">Problema</h3>
+          <p>Impossibilidade de dimensionar recipientes adequados sem dados sobre a geração diária e mensal de resíduos.</p>
+        </article>
+        <article class="card">
+          <h3 class="mini-title">Solução: Monitoramento Inicial</h3>
+          <ul>
+            <li>Transformar essa pendência em <strong>meta de curto prazo</strong> do PGRS.</li>
+            <li>Realizar período de monitoramento de <strong>30 a 60 dias</strong>.</li>
+            <li>Durante esse período, a equipe anotará <strong>todos os resíduos gerados</strong> na planilha de controle (Aba "Registros").</li>
+            <li>Ao final do período, calcular a <strong>média mensal exata</strong> para cada classe de resíduo.</li>
+            <li>Usar esses dados para dimensionar a compra de bombonas, caixas e recipientes adequados.</li>
+          </ul>
+        </article>
+      </div>
+
+      <h3>3. Local de Armazenamento Inadequado</h3>
+      <div class="grid">
+        <article class="card">
+          <h3 class="mini-title">Realidade Institucional</h3>
+          <p>Na UFSC não existem abrigos externos para resíduos químicos. O armazenamento temporário ocorre obrigatoriamente dentro dos laboratórios geradores. Para adequar o espaço atual, são necessárias adaptações mínimas.</p>
+        </article>
+      </div>
+
+      <h3>Adequações Mínimas Obrigatórias</h3>
+      <div class="grid two">
+        <article class="card">
+          <h3 class="mini-title">Identificação e Restrição de Acesso</h3>
+          <ul>
+            <li>Delinear a área de armazenamento com sinalização clara.</li>
+            <li>Afixar etiquetas indicando "ÁREA DE RESÍDUOS PERIGOSOS".</li>
+            <li>Restringir o acesso ao máximo possível, permitindo apenas pessoal autorizado.</li>
+            <li>Manter a área fechada quando não em uso.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Ventilação Adequada</h3>
+          <ul>
+            <li>O local deve ter boa ventilação natural ou mecânica.</li>
+            <li>Posicionar a área longe de ralos ou pontos de acúmulo de umidade.</li>
+            <li>Se possível, próximo a janelas ou sistema de exaustão.</li>
+            <li>Evitar acúmulo de vapores voláteis de produtos químicos.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Contenção de Vazamentos</h3>
+          <ul>
+            <li>Armazenar líquidos obrigatoriamente em <strong>bandejas de contenção</strong>.</li>
+            <li>Capacidade mínima da bandeja: 110% do maior recipiente.</li>
+            <li>Proteger o chão e áreas adjacentes de possíveis derramamentos.</li>
+            <li>Manter material de limpeza e absorvente próximo para emergências.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Segregação Física</h3>
+          <ul>
+            <li>Separar resíduos por classificação de risco: químicos, biológicos, perfurocortantes e comuns.</li>
+            <li>Respeitar incompatibilidades químicas (ex.: ácidos e bases em locais distintos).</li>
+            <li>Usar prateleiras ou estruturas que impeçam contato entre resíduos incompatíveis.</li>
+            <li>Documentar essa separação com etiquetas claras.</li>
+          </ul>
+        </article>
+      </div>
+
+      <h3>Cronograma de Implementação</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Etapa</th><th>Ação</th><th>Prazo</th><th>Responsável</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Definir espaço exato para armazenamento temporário.</td><td>Imediato</td><td>Responsável pelo LAFIC</td></tr>
+            <tr><td>2</td><td>Adquirir sacos vermelhos, bandejas de contenção e sinalização.</td><td>Até 2 semanas</td><td>Responsável por resíduos</td></tr>
+            <tr><td>3</td><td>Implementar sinalizações e adequações mínimas no local.</td><td>Até 3 semanas</td><td>Equipe técnica</td></tr>
+            <tr><td>4</td><td>Iniciar período de monitoramento (30-60 dias) com planilha.</td><td>Semana 4</td><td>Usuários do laboratório</td></tr>
+            <tr><td>5</td><td>Solicitar treinamento de coleta especial à Gestão de Resíduos.</td><td>Semana 2</td><td>Responsável pelo LAFIC</td></tr>
+            <tr><td>6</td><td>Reavaliação e ajustes após período de monitoramento.</td><td>Semana 12-16</td><td>Coordenação LAFIC</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="segurança" role="tabpanel" aria-labelledby="tab-segurança">
+      <div class="section-head">
+        <div>
+          <h2>Segurança, Emergências e Capacitação</h2>
+          <p class="lede">Medidas de proteção, condutas em incidentes e orientação dos usuários.</p>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <article class="card">
+          <h3 class="mini-title">Equipamentos de proteção pessoal</h3>
+          <ul class="pill-list">
+            <li>Jaleco</li>
+            <li>Luvas adequadas ao risco</li>
+            <li>Óculos de segurança</li>
+            <li>Protetor facial</li>
+            <li>Máscara ou respirador</li>
+            <li>Calçado fechado</li>
+            <li>Avental impermeável</li>
+          </ul>
+          <p>O uso de EPIs não substitui a segregação adequada, a identificação correta e as medidas de controle coletivo.</p>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Equipamentos de proteção coletiva (EPCs)</h3>
+          <ul class="pill-list">
+            <li>Capela de gases (Laboratório 1 - E4)</li>
+            <li>Capela de fluxo laminar</li>
+          </ul>
+          <p>Os EPCs disponíveis no LAFIC são fundamentais para o manuseio seguro de resíduos químicos e para evitar contaminação nos cultivos biológicos.</p>
+        </article>
+
+        <article class="card">
+          <h3 class="mini-title">Capacitação</h3>
+          <ul>
+            <li>Tipos de resíduos gerados no laboratório.</li>
+            <li>Segregação correta.</li>
+            <li>Identificação e rotulagem.</li>
+            <li>Uso de EPIs.</li>
+            <li>Procedimentos para químicos, biológicos e perfurocortantes.</li>
+            <li>Fluxos institucionais da UFSC.</li>
+            <li>Condutas em emergências.</li>
+          </ul>
+        </article>
+      </div>
+
+      <h3>Procedimentos em emergências</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Ordem</th><th>Conduta</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Interromper a atividade, quando seguro.</td></tr>
+            <tr><td>2</td><td>Isolar a área.</td></tr>
+            <tr><td>3</td><td>Comunicar o responsável pelo laboratório.</td></tr>
+            <tr><td>4</td><td>Identificar o material envolvido.</td></tr>
+            <tr><td>5</td><td>Utilizar EPIs adequados.</td></tr>
+            <tr><td>6</td><td>Realizar contenção e limpeza conforme a natureza do resíduo.</td></tr>
+            <tr><td>7</td><td>Registrar o ocorrido.</td></tr>
+            <tr><td>8</td><td>Acionar os setores competentes da UFSC quando necessário.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Para derramamentos químicos, consultar a Ficha de Informações de Segurança de Produtos Químicos e seguir procedimentos técnicos apenas quando houver orientação segura.</p>
+    </section>
+
+    <section class="tab-panel" id="registros" role="tabpanel" aria-labelledby="tab-registros">
+      <div class="section-head">
+        <div>
+          <h2>Registros, Responsabilidades e Revisão</h2>
+          <p class="lede">Controle documental mínimo para demonstrar a execução do PGRS.</p>
+        </div>
+      </div>
+
+      <h3>Planilha mínima de controle</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Data</th><th>Ambiente</th><th>Tipo de resíduo</th><th>Quantidade aproximada</th><th>Acondicionamento</th><th>Responsável</th><th>Encaminhamento</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="todo">[preencher]</span></td><td><span class="todo">[preencher]</span></td><td><span class="todo">[preencher]</span></td><td><span class="todo">[preencher]</span></td><td><span class="todo">[preencher]</span></td><td><span class="todo">[preencher]</span></td><td><span class="todo">[preencher]</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid three">
+        <article class="card">
+          <h3 class="mini-title">Responsável pelo laboratório</h3>
+          <ul>
+            <li>Garantir a implementação do PGRS.</li>
+            <li>Definir responsáveis por atividades de controle.</li>
+            <li>Solicitar capacitações e apoio institucional.</li>
+            <li>Manter registros e atualizar o plano.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3 class="mini-title">Usuários do laboratório</h3>
+          <ul>
+            <li>Segregar corretamente os resíduos.</li>
+            <li>Identificar recipientes sob sua responsabilidade.</li>
+            <li>Comunicar resíduos não identificados, vazamentos ou incidentes.</li>
+            <li>Utilizar EPIs e seguir procedimentos definidos.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3 class="mini-title">Responsável por resíduos</h3>
+          <ul>
+            <li>Monitorar pontos de geração.</li>
+            <li>Verificar identificação e acondicionamento.</li>
+            <li>Organizar registros.</li>
+            <li>Articular coleta e encaminhamento conforme fluxos da UFSC.</li>
+          </ul>
+        </article>
+      </div>
+
+      <h3>Pendências para validação</h3>
+      <ul>
+        <li>Nome completo e vínculo do responsável pelo LAFIC.</li>
+        <li>Departamento, centro e endereço institucional.</li>
+        <li>Lista de atividades realizadas em cada ambiente.</li>
+        <li>Lista de reagentes e produtos químicos armazenados.</li>
+        <li>Tipos de organismos, culturas ou amostras biológicas manipuladas.</li>
+        <li>Existência de autoclave ou outro tratamento prévio.</li>
+        <li>Quantidade média mensal de resíduos por classe.</li>
+        <li>Local exato de armazenamento temporário.</li>
+        <li>Fluxo atualmente usado para coleta de resíduos químicos e biológicos.</li>
+        <li>EPIs e EPCs disponíveis.</li>
+        <li>Rotina de treinamento dos usuários.</li>
+      </ul>
+
+      <h3>Monitoramento e revisão</h3>
+      <p>Este PGRS deve ser revisado anualmente, quando houver mudança nas atividades do laboratório, inclusão de novos reagentes, equipamentos ou processos, após incidentes relevantes ou quando houver atualização das normas internas da UFSC ou legislação aplicável.</p>
+    </section>
+
+    <section class="tab-panel" id="referências" role="tabpanel" aria-labelledby="tab-referências">
+      <div class="section-head">
+        <div>
+          <h2>Base Normativa e Referências</h2>
+          <p class="lede">Documentos usados como base para elaboração do plano.</p>
+        </div>
+      </div>
+
+      <div class="reference-list">
+        <p>UNIVERSIDADE FEDERAL DE SANTA CATARINA. <strong>Manual de Gerenciamento de Resíduos Laboratoriais</strong>. Florianópolis: UFSC, 2024. Disponível em: <a href="https://gestaoderesiduos.ufsc.br/files/2024/07/Manual-Residuos-UFSC-Pronto.pdf">Manual de Resíduos UFSC</a>.</p>
+        <p>BRASIL. Lei n. 12.305, de 2 de agosto de 2010. Institui a Política Nacional de Resíduos Sólidos.</p>
+        <p>BRASIL. Decreto n. 10.936, de 12 de janeiro de 2022. Regulamenta a Política Nacional de Resíduos Sólidos.</p>
+        <p>CONAMA. Resolução n. 358, de 29 de abril de 2005.</p>
+        <p>ANVISA. Resolução da Diretoria Colegiada - RDC n. 222, de 28 de março de 2018.</p>
+        <p>Mapa de Risco do Laboratório de Ficologia da Universidade Federal de Santa Catarina.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+
+    function activateTab(tab) {
+      tabs.forEach((item) => item.setAttribute('aria-selected', String(item === tab)));
+      panels.forEach((panel) => panel.classList.toggle('active', panel.id === tab.getAttribute('aria-controls')));
+      history.replaceState(null, '', `#${tab.getAttribute('aria-controls')}`);
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => activateTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        const current = tabs.indexOf(tab);
+        let next = current;
+        if (event.key === 'ArrowRight') next = (current + 1) % tabs.length;
+        if (event.key === 'ArrowLeft') next = (current - 1 + tabs.length) % tabs.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = tabs.length - 1;
+        if (next !== current) {
+          event.preventDefault();
+          tabs[next].focus();
+          activateTab(tabs[next]);
+        }
+      });
+    });
+
+    const initialPanel = location.hash.replace('#', '');
+    const initialTab = tabs.find((tab) => tab.getAttribute('aria-controls') === initialPanel);
+    if (initialTab) activateTab(initialTab);
+  </script>
+</body>
+</html>

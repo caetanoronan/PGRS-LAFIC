@@ -1,0 +1,27 @@
+{
+  "name": "pgrs-lafic-backend",
+  "version": "1.0.0",
+  "description": "Backend API para Gerenciamento de Resíduos do LAFIC - Notion + Express",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "setup-notion": "node setup-notion.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": ["PGRS", "waste-management", "LAFIC", "Notion", "biosecurity"],
+  "author": "Caetano Ronan - UFSC",
+  "license": "MIT",
+  "dependencies": {
+    "@notionhq/client": "^2.2.14",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
