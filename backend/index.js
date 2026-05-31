@@ -14,7 +14,13 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || 'http://localhost:5173'
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || [
+    'http://localhost:3001',
+    'http://localhost:5173',
+    'http://localhost:8000',
+    'https://pgrs-lafic.vercel.app',
+    'https://pgrs-lafic-backend.onrender.com'
+  ]
 }));
 app.use(express.json());
 
