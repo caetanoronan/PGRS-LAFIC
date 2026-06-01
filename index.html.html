@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Ambiental LAFIC - Hub</title>
+  <style>
+    :root {
+      --primary: #047857;
+      --primary-light: #10b981;
+      --secondary: #0f172a;
+      --secondary-light: #1e293b;
+      --text-main: #334155;
+      --text-muted: #64748b;
+      --bg-color: #f8fafc;
+      --white: #ffffff;
+      
+      /* Variáveis dos Cards (Modo Claro) */
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text-card: #0f172a;
+      --text-card-muted: #475569;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+      
+      /* Fundos Visuais (Claro) */
+      --visual-app-bg: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      --visual-doc-bg: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      --tag-bg: #f1f5f9;
+      --tag-color: #334155;
+    }
+
+    html.dark-mode {
+      --primary: #10b981;
+      --primary-light: #6ee7b7;
+      --secondary: #020617;
+      --secondary-light: #0f172a;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --bg-color: #0f172a;
+      --white: #1e293b;
+      
+      /* Variáveis dos Cards (Modo Escuro) */
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-card: #f8fafc;
+      --text-card-muted: #cbd5e1;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      
+      /* Fundos Visuais (Escuro) */
+      --visual-app-bg: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%);
+      --visual-doc-bg: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+      --tag-bg: #334155;
+      --tag-color: #e2e8f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      background-image: radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 0% 100%, rgba(15, 23, 42, 0.05) 0%, transparent 50%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* HEADER INSTITUCIONAL */
+    .hero {
+      background: var(--secondary);
+      color: #ffffff;
+      padding: 80px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 20px;
+      transition: all 0.3s ease;
+      color: white;
+      z-index: 50;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: scale(1.1);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: var(--bg-color);
+      transform: skewY(-2deg);
+      transition: background-color 0.3s ease;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #94a3b8;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .container {
+      max-width: 1100px;
+      margin: -20px auto 60px;
+      padding: 0 20px;
+      position: relative;
+      z-index: 20;
+      flex: 1;
+    }
+
+    /* PRODUTOS / SISTEMAS */
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s, border-color 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-visual {
+      width: 35%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border-right: 1px solid var(--card-border);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .visual-app { background: var(--visual-app-bg); }
+    .visual-doc { background: var(--visual-doc-bg); }
+
+    .icon-large {
+      font-size: 64px;
+      margin-bottom: 15px;
+    }
+
+    .product-content {
+      width: 65%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .product-content h2 {
+      color: var(--text-card);
+      font-size: 28px;
+      margin-bottom: 12px;
+      transition: color 0.3s ease;
+    }
+
+    .product-content p {
+      color: var(--text-card-muted);
+      font-size: 16px;
+      margin-bottom: 24px;
+      transition: color 0.3s ease;
+    }
+
+    .feature-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 15px;
+      transition: all 0.2s;
+      width: max-content;
+    }
+
+    .btn-primary { background: var(--secondary-light); color: #ffffff; }
+    .btn-primary:hover { background: var(--secondary); }
+    html.dark-mode .btn-primary { background: #3b82f6; color: #ffffff; }
+    html.dark-mode .btn-primary:hover { background: #2563eb; }
+
+    .btn-success { background: var(--primary); color: #ffffff; }
+    .btn-success:hover { background: var(--primary-light); }
+
+    /* ESTRUTURA TÉCNICA */
+    .tech-stack {
+      text-align: center;
+      padding: 40px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .tech-stack h3 {
+      font-size: 20px;
+      color: var(--text-card);
+      margin-bottom: 10px;
+      transition: color 0.3s ease;
+    }
+
+    .tech-stack p {
+      color: var(--text-card-muted);
+      font-size: 15px;
+      max-width: 600px;
+      margin: 0 auto;
+      transition: color 0.3s ease;
+    }
+
+    .tech-grid {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .tech-item {
+      color: var(--text-card-muted);
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+
+    .tech-item strong {
+      display: block;
+      color: var(--text-card);
+      font-size: 18px;
+      margin-bottom: 5px;
+      transition: color 0.3s ease;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-top: 1px solid var(--card-border);
+      background: var(--card-bg);
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    @media (max-width: 850px) {
+      .product-card { flex-direction: column; }
+      .product-visual, .product-content {
+        width: 100%;
+        border-right: none;
+      }
+      .product-visual {
+        border-bottom: 1px solid var(--card-border);
+      }
+      .hero h1 { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <button class="theme-toggle" id="themeToggle" title="Alternar modo claro/escuro">🌙</button>
+    <div class="hero-content">
+      <span class="badge">Centro de Ciências Biológicas - UFSC</span>
+      <h1>Portal Ambiental LAFIC</h1>
+      <p>Ecossistema digital unificado para o gerenciamento inteligente de resíduos, auditoria de biossegurança e conformidade normativa do Laboratório de Ficologia.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div class="products-grid">
+
+      <article class="product-card">
+        <div class="product-visual visual-app">
+          <div class="icon-large">⚡</div>
+          <h3 style="color: #0369a1; font-size: 18px;">Dashboard<br>Operacional</h3>
+        </div>
+        <div class="product-content">
+          <h2>Sistema de Gestão & Inventário</h2>
+          <p>O painel de uso diário na bancada. Desenvolvido para facilitar o registro de descartes, garantindo que nenhum resíduo seja classificado incorretamente.</p>
+
+          <div class="feature-tags">
+            <span class="tag">🌳 Fluxograma Inteligente (API)</span>
+            <span class="tag">📊 Inventário em Tempo Real</span>
+            <span class="tag">☁️ Integração Nuvem/Notion</span>
+          </div>
+
+          <a href="app.html" class="btn-action btn-primary">Acessar Painel Interativo ➔</a>
+        </div>
+      </article>
+
+      <article class="product-card">
+        <div class="product-visual visual-doc">
+          <div class="icon-large">📄</div>
+          <h3 style="color: #047857; font-size: 18px;">Documento<br>Normativo</h3>
+        </div>
+        <div class="product-content">
+          <h2>Manual Oficial (PGRS)</h2>
+          <p>O plano de gerenciamento completo. Contém os mapas de risco estruturais, diretrizes de segurança NB-1 e protocolos de inativação biológica.</p>
+
+          <div class="feature-tags">
+            <span class="tag">🛡️ Biossegurança NB-1</span>
+            <span class="tag">🧪 Inativação Química</span>
+            <span class="tag">🚨 Protocolo de Emergências</span>
+          </div>
+
+          <a href="PGRS_lafic_normas.html" class="btn-action btn-success">Ler Manual Completo ➔</a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="tech-stack">
+      <h3>Arquitetura do Ecossistema LAFIC</h3>
+      <p>Uma solução escalável construída para garantir a integridade dos dados e a segurança ambiental da universidade.</p>
+
+      <div class="tech-grid">
+        <div class="tech-item">
+          <strong>Frontend (Vercel)</strong>
+          Interface rápida e responsiva
+        </div>
+        <div class="tech-item">
+          <strong>Backend (Render)</strong>
+          API REST em Node/Express
+        </div>
+        <div class="tech-item">
+          <strong>Banco de Dados</strong>
+          Integração nativa via Notion API
+        </div>
+        <div class="tech-item">
+          <strong>Próxima Fase (V2)</strong>
+          Geração de QR Codes p/ Bancadas
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>🔬 Laboratório de Ficologia (LAFIC) • Departamento de Botânica • Universidade Federal de Santa Catarina (UFSC)</p>
+    <p style="margin-top: 8px; opacity: 0.7;">Desenvolvido como solução tecnológica para Gestão de Resíduos Sólidos Universitários.</p>
+  </footer>
+
+  <script>
+    // Tema claro/escuro integrado e persistente
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+
+    // Restaurar preferência salva
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      if (savedTheme === 'dark') {
+        html.classList.add('dark-mode');
+        themeToggle.textContent = '☀️';
+      }
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      html.classList.add('dark-mode');
+      themeToggle.textContent = '☀️';
+    }
+
+    // Toggle ao clicar no botão
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark-mode');
+      const isDark = html.classList.contains('dark-mode');
+      themeToggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

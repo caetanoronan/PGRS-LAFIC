@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
@@ -6,19 +6,23 @@
   <title>PGRS LAFIC - UFSC</title>
   <style>
     :root {
-      --bg: #f6f7f4;
+      --bg: #f8fafc;
       --panel: #ffffff;
-      --ink: #1e2723;
-      --muted: #617069;
-      --line: #d9ded8;
-      --green: #2f8f5b;
-      --green-dark: #1f6542;
-      --blue: #256ea8;
+      --ink: #334155;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --primary: #047857;
+      --primary-light: #10b981;
+      --secondary: #0f172a;
+      --secondary-light: #1e293b;
+      --green: #047857;
+      --green-dark: #065f46;
+      --blue: #0f172a;
       --red: #ba3d36;
       --yellow: #d5a51f;
       --brown: #8a5a35;
-      --gray: #eef1ed;
-      --shadow: 0 16px 38px rgba(26, 42, 35, 0.10);
+      --gray: #f1f5f9;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
     }
 
     * {
@@ -31,6 +35,7 @@
       background: var(--bg);
       font-family: Arial, Helvetica, sans-serif;
       line-height: 1.55;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     a {
@@ -39,7 +44,9 @@
 
     .topbar {
       border-bottom: 1px solid var(--line);
-      background: #ffffff;
+      background: var(--secondary);
+      color: white;
+      transition: background-color 0.3s ease;
     }
 
     .wrap {
@@ -57,7 +64,7 @@
 
     .eyebrow {
       margin: 0 0 8px;
-      color: var(--green-dark);
+      color: #34d399;
       font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0;
@@ -70,12 +77,13 @@
       font-size: clamp(2rem, 4vw, 3.5rem);
       line-height: 1.05;
       letter-spacing: 0;
+      color: white;
     }
 
     .subtitle {
       max-width: 790px;
       margin: 14px 0 0;
-      color: var(--muted);
+      color: #94a3b8;
       font-size: 1rem;
     }
 
@@ -99,13 +107,92 @@
       color: var(--ink);
       background: var(--panel);
       cursor: pointer;
+      transition: all 0.2s;
     }
 
     .action-btn:hover {
-      border-color: var(--green);
+      background: var(--gray);
+      border-color: var(--primary);
       color: var(--green-dark);
     }
 
+    /* --- MODO ESCURO --- */
+    html.dark-mode {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --ink: #f1f5f9;
+      --muted: #cbd5e1;
+      --line: #334155;
+      --gray: #334155;
+    }
+
+    html.dark-mode .topbar {
+      background: var(--secondary);
+      border-bottom: 1px solid var(--line);
+    }
+
+    html.dark-mode .tabs-shell {
+      background: rgba(31, 41, 55, 0.96);
+      border-bottom: 1px solid var(--line);
+    }
+
+    html.dark-mode .tab {
+      color: var(--muted);
+    }
+
+    html.dark-mode .tab[aria-selected="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    html.dark-mode .action-btn {
+      background: var(--panel);
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    html.dark-mode .action-btn:hover {
+      background: var(--line);
+      border-color: var(--primary);
+    }
+
+    html.dark-mode .card {
+      background: var(--panel);
+      border-color: var(--line);
+    }
+
+    html.dark-mode .table-wrap {
+      background: var(--panel);
+      border-color: var(--line);
+    }
+
+    html.dark-mode th {
+      background: var(--gray);
+      color: var(--ink);
+    }
+
+    html.dark-mode th, html.dark-mode td {
+      border-bottom: 1px solid var(--line);
+    }
+
+    html.dark-mode .field {
+      border-bottom: 1px solid var(--line);
+    }
+
+    html.dark-mode .section-head {
+      border-bottom: 1px solid var(--line);
+    }
+
+    html.dark-mode .reference-list p {
+      background: var(--panel);
+    }
+    
+    html.dark-mode .map-block img {
+      filter: brightness(0.85);
+    }
+
+    /* --- RESTANTE DO CSS ORIGINAL --- */
     .tabs-shell {
       position: sticky;
       top: 0;
@@ -113,6 +200,7 @@
       border-bottom: 1px solid var(--line);
       background: rgba(246, 247, 244, 0.96);
       backdrop-filter: blur(8px);
+      transition: background-color 0.3s ease;
     }
 
     .tabs {
@@ -131,6 +219,7 @@
       color: var(--muted);
       background: transparent;
       cursor: pointer;
+      transition: all 0.2s;
     }
 
     .tab[aria-selected="true"] {
@@ -226,6 +315,7 @@
       padding: 18px;
       background: var(--panel);
       box-shadow: var(--shadow);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     .mini-title {
@@ -267,6 +357,7 @@
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel);
+      transition: background-color 0.3s ease;
     }
 
     table {
@@ -397,7 +488,7 @@
       background: rgba(255, 255, 255, 0.65);
     }
 
-    @média (max-width: 860px) {
+    @media (max-width: 860px) {
       .hero,
       .section-head,
       .grid.two,
@@ -419,7 +510,7 @@
       }
     }
 
-    @média (max-width: 560px) {
+    @media (max-width: 560px) {
       .wrap {
         width: min(100% - 22px, 1180px);
       }
@@ -433,13 +524,14 @@
       }
     }
 
-    @média print {
+    @media print {
       body {
         background: #ffffff;
       }
 
       .tabs-shell,
-      .actions {
+      .actions,
+      #themeToggleHeader {
         display: none;
       }
 
@@ -467,7 +559,10 @@
   </style>
 </head>
 <body>
-  <header class="topbar">
+  <header class="topbar" style="position: relative;">
+    <!-- Botão de Tema Adicionado -->
+    <button id="themeToggleHeader" title="Alternar modo claro/escuro" style="position: absolute; top: 15px; right: 20px; background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">🌙</button>
+    
     <div class="wrap hero">
       <div>
         <p class="eyebrow">Universidade Federal de Santa Catarina</p>
@@ -476,7 +571,7 @@
       </div>
       <div class="actions" aria-label="Ações do documento">
         <button class="action-btn" type="button" onclick="window.print()">Imprimir / salvar PDF</button>
-        <a class="action-btn" href="PGRS_LAFIC.md">Abrir Markdown</a>
+        <a class="action-btn" href="app.html" style="text-decoration: none; display: inline-block; text-align: center;">Acessar Painel ➔</a>
       </div>
     </div>
   </header>
@@ -513,8 +608,8 @@
             <div class="field"><dt class="label">Centro</dt><dd>Centro de Ciências Biológicas (CCB)</dd></div>
             <div class="field"><dt class="label">Endereço</dt><dd>Rua Eng. Agronômico Andrei Cristian Ferreira, 216 - Carvoeira</dd></div>
             <div class="field"><dt class="label">Responsável pelo laboratório</dt><dd>Carlos Yure B. Oliveira, José Bonomi Barufi, Leonardo R. Rörig e Paulo Antunes Horta</dd></div>
-            <div class="field"><dt class="label">Responsável pelo PGRS</dt><dd><span class="todo">[preencher]</span></dd></div>
-            <div class="field"><dt class="label">Data de elaboração</dt><dd><span class="todo">[preencher]</span></dd></div>
+            <div class="field"><dt class="label">Responsável pelo PGRS</dt><dd>Ronan Armando Caetano</dd></div>
+            <div class="field"><dt class="label">Data de elaboração</dt><dd>01/06/2026</dd></div>
             <div class="field"><dt class="label">Data de revisão</dt><dd><span class="todo">[preencher]</span></dd></div>
           </dl>
         </article>
@@ -847,6 +942,31 @@
         </div>
       </div>
 
+      <h3>Diretrizes de Biossegurança (NB-1)</h3>
+      <div class="grid two" style="margin-bottom: 28px;">
+        <article class="card">
+          <h3 class="mini-title">Práticas de Bancada</h3>
+          <p>O LAFIC enquadra-se no Nível de Biossegurança 1 (NB-1), lidando com organismos de baixo risco individual e comunitário. No entanto, o rigor asséptico é obrigatório:</p>
+          <ul>
+            <li>Proibido comer, beber ou armazenar alimentos nas áreas de cultivo e bancadas.</li>
+            <li>Descontaminar as superfícies de trabalho com álcool 70% antes e após os procedimentos.</li>
+            <li>Cultivos e amostras devem permanecer tampados ou vedados quando não estiverem em manipulação ativa.</li>
+            <li>Lavagem rigorosa das mãos após o manuseio de material biológico e antes de deixar o laboratório.</li>
+          </ul>
+        </article>
+
+        <article class="card" style="border-left: 4px solid #8b7355;">
+          <h3 class="mini-title">Inativação Química (Plano de Contingência)</h3>
+          <p>Devido à ausência de autoclave no laboratório para pré-tratamento, os meios de cultura líquidos devem ser inativados quimicamente antes do descarte:</p>
+          <ul>
+            <li>Adicionar <strong>Hipoclorito de Sódio a 1%</strong> diretamente ao meio líquido.</li>
+            <li>Garantir tempo de contato mínimo de <strong>30 minutos</strong> para total inativação.</li>
+            <li>Após a inativação, o líquido pode ser descartado na pia sob água corrente abundante.</li>
+            <li>Biomassa sólida que não puder ser inativada quimicamente deve ir para o <strong>Saco Vermelho</strong>.</li>
+          </ul>
+        </article>
+      </div>
+
       <div class="grid two">
         <article class="card">
           <h3 class="mini-title">Equipamentos de proteção pessoal</h3>
@@ -995,6 +1115,7 @@
   </main>
 
   <script>
+    // Lógica das Abas
     const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
     const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
 
@@ -1024,6 +1145,37 @@
     const initialPanel = location.hash.replace('#', '');
     const initialTab = tabs.find((tab) => tab.getAttribute('aria-controls') === initialPanel);
     if (initialTab) activateTab(initialTab);
+
+    // Lógica do Modo Escuro Integrada
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggleHeader');
+    const isDarkMedia = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function updateBtnVisual(isDark) {
+      themeToggle.textContent = isDark ? '☀️' : '🌙';
+      if(isDark) {
+        themeToggle.style.background = 'rgba(255,255,255,0.1)';
+        themeToggle.style.borderColor = 'rgba(255,255,255,0.2)';
+      } else {
+        themeToggle.style.background = 'rgba(0,0,0,0.05)';
+        themeToggle.style.borderColor = 'rgba(0,0,0,0.1)';
+      }
+    }
+
+    // Restaurar preferência salva
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && isDarkMedia.matches)) {
+      html.classList.add('dark-mode');
+      updateBtnVisual(true);
+    }
+
+    // Toggle ao clicar no botão
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark-mode');
+      const isDark = html.classList.contains('dark-mode');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateBtnVisual(isDark);
+    });
   </script>
 </body>
 </html>
