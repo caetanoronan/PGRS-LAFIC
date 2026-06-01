@@ -625,6 +625,7 @@
     <p>🧬 Laboratório de Ficologia (LAFIC) - Centro de Ciências Biológicas (CCB) - UFSC</p>
   </footer>
 
+  <!-- Modal: Árvore de Decisão com textos 100% restaurados -->
   <div id="treeModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -632,11 +633,13 @@
         <button class="modal-close" onclick="closeTree()">Fechar ✕</button>
       </div>
 
+      <!-- Div vazia, o Mermaid será injetado e renderizado via JS para nunca vazar texto -->
       <div class="mermaid" id="treeContent"></div>
 
       <div style="margin-top: 30px;">
         <h3 style="margin-bottom: 16px; color: var(--text-main);">📋 Decisões por Tipo:</h3>
 
+        <!-- 🔴 BIOLÓGICO -->
         <div class="decision-item" onclick="toggleDecision(this)">
           <h3>🔴 BIOLÓGICO / INFECTANTE <span class="toggle">▼</span></h3>
           <div class="decision-content">
@@ -644,37 +647,110 @@
             <p><strong>❓ Decisão Crítica:</strong> É possível inativar quimicamente na bancada?</p>
             <div class="action-box action-yes">
               <strong>✅ SIM (Meio líquido)</strong>
-              <p>1. Adicionar Hipoclorito de Sódio 1% | 2. Aguardar 30 min | 3. Descartar na pia sob água corrente</p>
+              <p>1. Adicionar Hipoclorito de Sódio 1%</p>
+              <p>2. Aguardar 30 minutos</p>
+              <p>3. Descartar na pia com água corrente abundante</p>
             </div>
             <div class="action-box action-no">
               <strong>❌ NÃO (Biomassa sólida)</strong>
-              <p>1. Acondicionar em <strong>Saco Vermelho</strong> | 2. Solicitar <strong>Coleta Especial (SAU-UFSC)</strong></p>
+              <p>1. Acondicionar em <strong>Saco Vermelho</strong></p>
+              <p>2. Etiquetar com data, tipo, responsável</p>
+              <p>3. Solicitar <strong>Coleta Especial (SAU-UFSC)</strong></p>
+            </div>
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong> Coleta por empresa licenciada ou descarte na pia (se inativado)
             </div>
           </div>
         </div>
 
+        <!-- 🟡 QUÍMICO -->
         <div class="decision-item" onclick="toggleDecision(this)">
           <h3>🟡 QUÍMICO <span class="toggle">▼</span></h3>
           <div class="decision-content">
             <p><strong>Origem:</strong> Fixadores (formol), solventes, reagentes vencidos</p>
+            <p><strong>❓ Decisão Crítica:</strong> Qual compatibilidade química?</p>
             <div class="action-box action-yes">
               <strong>🔴 HALOGENADO (Formol, Cloro)</strong>
-              <p>Acondicionar em Bombona PEAD (Rótulo VERMELHO). NUNCA misturar com não-halogenados.</p>
+              <p>1. Acondicionar em <strong>Bombona PEAD separada</strong> (máx. 80%)</p>
+              <p>2. Rótulo: <strong style="color: red;">VERMELHO</strong></p>
+              <p>3. NUNCA misturar com não-halogenados</p>
             </div>
             <div class="action-box action-no">
               <strong>🔵 NÃO-HALOGENADO (Álcool, Acetona)</strong>
-              <p>Acondicionar em Bombona PEAD (Rótulo AZUL). NUNCA misturar com halogenados.</p>
+              <p>1. Acondicionar em <strong>Bombona PEAD separada</strong> (máx. 80%)</p>
+              <p>2. Rótulo: <strong style="color: blue;">AZUL</strong></p>
+              <p>3. NUNCA misturar com halogenados</p>
+            </div>
+            <div class="action-box" style="border-left-color: #f59e0b; background: var(--action-dest-bg);">
+              <strong>🏷️ Próximo Passo:</strong>
+              <p>Preencher <strong>Código IBAMA</strong> (ex: 3001.32.00 para formol)</p>
+              <p>Solicitar <strong>Coleta UFSC</strong></p>
+            </div>
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong> Empresa licenciada para processamento químico
             </div>
           </div>
         </div>
 
+        <!-- 🟠 PERFUROCORTANTE -->
         <div class="decision-item" onclick="toggleDecision(this)">
           <h3>🟠 PERFUROCORTANTE <span class="toggle">▼</span></h3>
           <div class="decision-content">
-            <p><strong>Origem:</strong> Lâminas, lamínulas, pipetas de vidro quebradas</p>
+            <p><strong>Origem:</strong> Lâminas, lamínulas, pipetas de vidro, vidrarias quebradas, bisturis quebrados</p>
+            <p><strong>⚠️ Sem decisão:</strong> DESCARTE IMEDIATO</p>
             <div class="action-box action-yes">
               <strong>🚨 Protocolo de Segurança:</strong>
-              <p>Usar PINÇAS. Colocar em Caixa Rígida Amarela (Descarpack).</p>
+              <p>1. Use <strong>PINÇAS</strong> ou <strong>PÁ</strong> - NUNCA as mãos!</p>
+              <p>2. Coloque em <strong>Caixa Rígida Amarela (Descarpack)</strong></p>
+              <p>3. Fechar quando atingir a linha pontilhada</p>
+              <p>4. Solicitar coleta UFSC</p>
+            </div>
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong> Empresa licenciada para descarte de perfurocortantes
+            </div>
+          </div>
+        </div>
+
+        <!-- 🔵 LOGÍSTICA REVERSA -->
+        <div class="decision-item" onclick="toggleDecision(this)">
+          <h3>🔵 LOGÍSTICA REVERSA <span class="toggle">▼</span></h3>
+          <div class="decision-content">
+            <p><strong>Origem:</strong> Pilhas, baterias, lâmpadas tubulares</p>
+            <p><strong>⚠️ Sem decisão técnica:</strong> ARMAZENAMENTO ESPECÍFICO</p>
+            <div class="action-box action-yes">
+              <strong>📦 Protocolo de Armazenamento:</strong>
+              <p>1. Armazenar em <strong>local seco</strong></p>
+              <p>2. Evitar mistura com outros resíduos</p>
+              <p>3. Identificar tipo: Pilha / Bateria / Lâmpada</p>
+            </div>
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong>
+              <p>Entregar em <strong>Ponto de Coleta Específico UFSC</strong></p>
+              <p>(Não vai para lixo comum)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ⚪ COMUM/RECICLÁVEL -->
+        <div class="decision-item" onclick="toggleDecision(this)">
+          <h3>⚪ COMUM / RECICLÁVEL <span class="toggle">▼</span></h3>
+          <div class="decision-content">
+            <p><strong>Origem:</strong> Papel toalha limpo, embalagens limpas, caixas de papelão</p>
+            <p><strong>⚠️ Sem decisão técnica:</strong> DESTINAÇÃO CONFORME TIPO</p>
+            <div class="action-box action-yes">
+              <strong>🗑️ Comum (Não reciclável):</strong>
+              <p>1. Usar <strong>Saco Branco</strong></p>
+              <p>2. Colocar em lixeira comum</p>
+              <p>3. Coleta regular de resíduos</p>
+            </div>
+            <div class="action-box action-no">
+              <strong>♻️ Reciclável:</strong>
+              <p>1. Usar <strong>Saco Verde ou Azul</strong></p>
+              <p>2. Colocar em lixeira de reciclagem</p>
+              <p>3. Coleta regular de reciclagem</p>
+            </div>
+            <div class="action-box action-dest">
+              <strong>📍 Destino Final:</strong> Lixo comum ou reciclagem (conforme tipo)
             </div>
           </div>
         </div>
@@ -688,7 +764,7 @@
 
     mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
-    // O Fluxograma fica guardado no JS e só aparece quando abrir, impedindo vazamento de texto na tela principal
+    // O Fluxograma fica guardado no JS e só aparece quando abrir
     const treeFlowchart = `graph TD
     A["🚀 Início: Qual o tipo de resíduo?"]
     A --> B["🔴 BIOLÓGICO<br/>Biomassa, meios, amostras"]
@@ -708,9 +784,11 @@
       modal.classList.add('active');
       const content = document.getElementById('treeContent');
       if (!content.getAttribute('data-loaded')) {
-        content.innerHTML = treeFlowchart;
-        mermaid.contentLoaded();
-        content.setAttribute('data-loaded', 'true');
+        setTimeout(() => {
+          content.innerHTML = treeFlowchart;
+          mermaid.init(undefined, content);
+          content.setAttribute('data-loaded', 'true');
+        }, 150); // Atraso mágico para evitar vazamento
       }
     }
 
