@@ -964,7 +964,23 @@
       </div>
 
       <!-- Diagrama Mermaid Principal -->
-      <div class="mermaid" id="treeContent"></div>
+      <div class="mermaid" id="treeContent">
+        graph TD
+        A["🚀 Início: Qual o tipo de resíduo?"]
+
+        A --> B["🔴 BIOLÓGICO<br/>Biomassa, meios, amostras"]
+        A --> C["🟡 QUÍMICO<br/>Fixadores, solventes"]
+        A --> D["🟠 PERFUROCORTANTE<br/>Vidros, lâminas"]
+        A --> E["🔵 LOGÍSTICA REVERSA<br/>Pilhas, baterias"]
+        A --> F["⚪ COMUM/RECICLÁVEL<br/>Papel, embalagens"]
+
+        style A fill:#667eea,color:#fff,stroke:#333,stroke-width:3px
+        style B fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+        style C fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+        style D fill:#fed7aa,stroke:#ea580c,stroke-width:2px
+        style E fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+        style F fill:#e5e7eb,stroke:#6b7280,stroke-width:2px
+      </div>
 
       <!-- Abas Expandíveis por Tipo -->
       <div style="margin-top: 30px;">
@@ -1110,34 +1126,10 @@
     // Inicializar Mermaid
     mermaid.initialize({ startOnLoad: true, theme: 'default' });
 
-    // Diagrama Mermaid Simplificado (Versão 1)
-    const treeFlowchart = `graph TD
-    A["🚀 Início: Qual o tipo de resíduo?"]
-
-    A --> B["🔴 BIOLÓGICO<br/>Biomassa, meios, amostras"]
-    A --> C["🟡 QUÍMICO<br/>Fixadores, solventes"]
-    A --> D["🟠 PERFUROCORTANTE<br/>Vidros, lâminas"]
-    A --> E["🔵 LOGÍSTICA REVERSA<br/>Pilhas, baterias"]
-    A --> F["⚪ COMUM/RECICLÁVEL<br/>Papel, embalagens"]
-
-    style A fill:#667eea,color:#fff,stroke:#333,stroke-width:3px
-    style B fill:#fee2e2,stroke:#ef4444,stroke-width:2px
-    style C fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
-    style D fill:#fed7aa,stroke:#ea580c,stroke-width:2px
-    style E fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
-    style F fill:#e5e7eb,stroke:#6b7280,stroke-width:2px`;
-
-    // Abrir modal com árvore - renderizar APÓS estar visível
+    // Diagrama Mermaid já está fixo no HTML - apenas abrir modal
     function showTree() {
       const modal = document.getElementById('treeModal');
-      modal.classList.add('active'); // Mostrar primeiro
-
-      // Renderizar depois de estar visível
-      setTimeout(() => {
-        const content = document.getElementById('treeContent');
-        content.innerHTML = treeFlowchart;
-        mermaid.contentLoaded();
-      }, 50);
+      modal.classList.add('active');
     }
 
     function closeTree() {
