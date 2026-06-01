@@ -19,6 +19,7 @@ const allowedOrigins = [
   'http://localhost:8000',
   'https://pgrs-lafic.vercel.app',
   'https://pgrs-lafic-backend.onrender.com',
+  'https://caetanoronan.github.io',
   ...(process.env.ALLOWED_ORIGINS?.split(',') || [])
 ];
 
